@@ -58,35 +58,24 @@ class MersenneTwister:
 
         self.index = 0  # Reset the index to start generating new values
 
+
     def generate_uniform(self):
         """Generate a uniform random number in the range [0, 1]."""
         # Get the next 32-bit random number and normalize it
         return self.next_random() / float(2 ** 32)
 
 
-def create_random_numbers(seed, size):
-    """Generate a list of random numbers with the given seed and size."""
-    mt = MersenneTwister(seed)
-    return [mt.next_random() for _ in range(size)]
-
-
-def generate_uniform_numbers(seed, size):
+def generate_uniform_numbers(seed, list_size):
     """Generate a list of uniform [0, 1] numbers."""
     mt = MersenneTwister(seed)
-    return [mt.generate_uniform() for _ in range(size)]
+    return [mt.generate_uniform() for _ in range(list_size)]
 
 
-# Example Usage
-# seed = 2
-# size = 10  # Generate 10 random numbers
-# vals = create_random_numbers(seed, size)
-# print(vals)
-
-def plot_histogram(uniform_numbers):
+def plot_histogram(numbers, dist, num_samples):
     """Plot the histogram of the generated uniform numbers."""
     plt.figure(figsize=(8, 6))  # Set figure size for better readability
-    plt.hist(uniform_numbers, bins=50, density=True, color='skyblue', alpha=0.7, edgecolor='black')
-    plt.title('Histogram of Uniform[0, 1] Numbers', fontsize=16, fontweight='bold')
+    plt.hist(numbers, bins=50, density=True, color='skyblue', alpha=0.7, edgecolor='black')
+    plt.title(f"Histogram of {num_samples} {dist} Numbers", fontsize=16, fontweight='bold')
     plt.xlabel('Value', fontsize=14)
     plt.ylabel('Density', fontsize=14)
     plt.grid(True, linestyle='--', linewidth=0.5, alpha=0.7)
@@ -96,9 +85,9 @@ def plot_histogram(uniform_numbers):
 
 if __name__ == '__main__':
     # Example Usage
-    seed = 42  # The answer to everything
+    seed_42 = 42  # The answer to everything
     size = 1000000  # Number of random numbers to generate
-    uniform_numbers = generate_uniform_numbers(seed, size)
-
+    uniform_numbers = generate_uniform_numbers(seed_42, size)
+    distribution = "Uniform[0, 1]"
     # Plot the histogram to check uniformity
-    plot_histogram(uniform_numbers)
+    plot_histogram(uniform_numbers, distribution, size)
